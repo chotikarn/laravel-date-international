@@ -1,21 +1,5 @@
 <?php
 
-if (!function_exists('dateintl_date')) {
-
-    /**
-     * Generate a international date string
-     *
-     * @param $type
-     * @param $dateObject
-     * @return string
-     */
-    function dateintl_date($type, $dateObject)
-    {
-        return app('dateintl')->date($type, $dateObject);
-    }
-
-}
-
 if (!function_exists('dateintl_time')) {
 
     /**
@@ -31,6 +15,22 @@ if (!function_exists('dateintl_time')) {
     }
 }
 
+if (!function_exists('dateintl_date')) {
+
+    /**
+     * Generate a international date string
+     *
+     * @param $type
+     * @param $dateObject
+     * @return string
+     */
+    function dateintl_date($type, $dateObject)
+    {
+        return app('dateintl')->date($type, $calendar, $dateObject);
+    }
+
+}
+
 if (!function_exists('dateintl_full')) {
 
     /**
@@ -42,21 +42,6 @@ if (!function_exists('dateintl_full')) {
      */
     function dateintl_full($type, $dateObject, $withSeconds = false)
     {
-        return app('dateintl')->full($type, $dateObject, $withSeconds);
-    }
-}
-
-if (!function_exists('dateintl_fullmix')) {
-
-    /**
-     * Generate a international date string
-     *
-     * @param $type
-     * @param $dateObject
-     * @return string
-     */
-    function dateintl_fullmix($type, $dateObject)
-    {
-        return app('dateintl')->dateintl_fullmix($type, $dateObject);
+        return app('dateintl')->full($type, $calendar, $dateObject, $withSeconds);
     }
 }
