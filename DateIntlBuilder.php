@@ -9,15 +9,15 @@ class DateIntlBuilder
 {
 
     use Macroable;
-    protected $langCode;
+    protected $locale;
+    
+    protected $calendar;
 
-    public function __construct($lang = null)
+    public function __construct()
     {
-        // set langcode
-        if (is_null($lang)) {
-            $lang = App::getLocale();
-        }
-        $this->langCode = $lang . '_' . strtoupper($lang);
+        $lang = App::getLocale();
+        $this->locale = $lang . '_' . strtoupper($lang);
+        $this->calendar = '';
     }
 
     public function date($type, Carbon $carbon)
@@ -52,6 +52,15 @@ class DateIntlBuilder
         return $fmt->format($carbon->getTimestamp());
     }
 
+    public function full($type, $calendar  Carbon $carbon, $withSeconds = false)
+    {
+        $type = $this->getType($type);
+        $calendar = $this->getType($calendar);
+        $fmt = new IntlDateFormatter($this->langCode, $type, $this->getTimeType($withSeconds), $carbon->tz, $calendar);
+
+        return $fmt->format($carbon->getTimestamp());
+    }
+
     private function getTimeType($withSeconds)
     {
         if ($withSeconds) {
@@ -60,20 +69,4 @@ class DateIntlBuilder
 
         return IntlDateFormatter::SHORT;
     }
-
-    public function full($type, Carbon $carbon, $withSeconds = false)
-    {
-        $type = $this->getType($type);
-        $fmt = new IntlDateFormatter($this->langCode, $type, $this->getTimeType($withSeconds), $carbon->tz);
-
-        return $fmt->format($carbon->getTimestamp());
-    }
-
-    public function fullmix($dateType, $timeType, Carbon $carbon)
-    {
-        $fmt = new IntlDateFormatter($this->langCode, $this->getType($dateType), $this->getType($timeType), $carbon->tz);
-
-        return $fmt->format($carbon->getTimestamp());
-    }
-
 }
