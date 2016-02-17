@@ -22,7 +22,7 @@ class DateIntlBuilder
 
     public function date($type, Carbon $carbon)
     {
-        $fmt = new IntlDateFormatter($this->langCode, $this->getType($type), IntlDateFormatter::NONE, $carbon->tz);
+        $fmt = new IntlDateFormatter($this->locale, $this->getType($type), IntlDateFormatter::NONE, $carbon->tz);
 
         return $fmt->format($carbon->getTimestamp());
     }
@@ -47,7 +47,7 @@ class DateIntlBuilder
 
     public function time(Carbon $carbon, $withSeconds = false)
     {
-        $fmt = new IntlDateFormatter($this->langCode, IntlDateFormatter::NONE, $this->getTimeType($withSeconds), $carbon->tz);
+        $fmt = new IntlDateFormatter($this->locale, IntlDateFormatter::NONE, $this->getTimeType($withSeconds), $carbon->tz);
 
         return $fmt->format($carbon->getTimestamp());
     }
@@ -56,7 +56,7 @@ class DateIntlBuilder
     {
         $type = $this->getType($type);
         $calendar = $this->getType($calendar);
-        $fmt = new IntlDateFormatter($this->langCode, $type, $this->getTimeType($withSeconds), $carbon->tz, $calendar);
+        $fmt = new IntlDateFormatter($this->locale, $type, $this->getTimeType($withSeconds), $carbon->tz, $calendar);
 
         return $fmt->format($carbon->getTimestamp());
     }
