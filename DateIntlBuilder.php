@@ -51,6 +51,15 @@ class DateIntlBuilder
 
         return $fmt->format($carbon->getTimestamp());
     }
+    
+    public function date($type, $calendar, Carbon $carbon)
+    {
+        $type = $this->getType($type);
+        $calendar = $this->getType($calendar);
+        $fmt = new IntlDateFormatter($this->locale, $type, IntlDateFormatter::NONE, $carbon->tz, $calendar);
+        
+        return $fmt->format($carbon->getTimestamp());
+    }
 
     public function full($type, $calendar, Carbon $carbon, $withSeconds = false)
     {
