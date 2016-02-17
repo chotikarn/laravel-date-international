@@ -52,7 +52,7 @@ class DateIntlBuilder
         return $fmt->format($carbon->getTimestamp());
     }
 
-    public function full($type, $calendar  Carbon $carbon, $withSeconds = false)
+    public function full($type, $calendar,  Carbon $carbon, $withSeconds = false)
     {
         $type = $this->getType($type);
         $calendar = $this->getType($calendar);
